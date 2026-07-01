@@ -1,0 +1,10 @@
+# Build artifacts / caches
+.build/
+.build-bin/
+
+# Compiled app bundle & distributable (ship these via GitHub Releases instead)
+*.app/
+*.zip
+
+# macOS
+.DS_Store
