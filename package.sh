@@ -56,7 +56,7 @@ for ARCH in arm64 x86_64; do
     OUT="$BUILD_DIR/$APP_NAME-$ARCH"
     echo "==> Compiling $ARCH ($TARGET)…"
     xcrun swiftc -O -target "$TARGET" \
-        "${OVERLAY_ARGS[@]}" \
+        ${OVERLAY_ARGS[@]+"${OVERLAY_ARGS[@]}"} \
         -module-cache-path "$BUILD_DIR/modulecache-$ARCH" \
         -o "$OUT" \
         "${SOURCES[@]}"
@@ -79,12 +79,24 @@ cp "$ROOT/Resources/MenuBarIcon.png" "$APP_DIR/Contents/Resources/MenuBarIcon.pn
 echo "==> Ad-hoc code-signing…"
 codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_DIR"
 
+# Stage the app alongside the double-clickable installer so the zip unpacks to a
+# single "Flower" folder containing both — recipients just double-click the installer.
+echo "==> Staging distributables…"
+STAGE_ROOT="$BUILD_DIR/dist"
+STAGE="$STAGE_ROOT/$APP_NAME"
+rm -rf "$STAGE_ROOT"
+mkdir -p "$STAGE"
+cp -R "$APP_DIR" "$STAGE/"
+cp "$ROOT/Install $APP_NAME.command" "$STAGE/"
+chmod +x "$STAGE/Install $APP_NAME.command"
+
 echo "==> Zipping…"
 rm -f "$ZIP_PATH"
-# ditto preserves the bundle structure + resource forks correctly for distribution.
-ditto -c -k --keepParent "$APP_DIR" "$ZIP_PATH"
+# ditto preserves the bundle structure, resource forks, and the installer's +x bit.
+ditto -c -k --keepParent "$STAGE" "$ZIP_PATH"
 
 echo ""
 echo "✅ Universal build zipped: $ZIP_PATH"
 lipo -info "$APP_DIR/Contents/MacOS/$APP_NAME"
+echo "   Unzips to a '$APP_NAME' folder with $APP_NAME.app + 'Install $APP_NAME.command'."
 echo "   Send this zip to friends along with SHARING.md."

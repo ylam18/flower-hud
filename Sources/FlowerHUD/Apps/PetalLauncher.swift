@@ -57,6 +57,13 @@ enum PetalLauncher {
             // Best-effort: post the default Show-Desktop key (fn-F11). Depends on the
             // shortcut being enabled in System Settings ▸ Keyboard ▸ Shortcuts.
             postKey(CGKeyCode(kVK_F11), flags: .maskSecondaryFn)
+        case .screenshotSelection:
+            // Post ⌘⇧4 — the built-in interactive area-selection screenshot. Going through
+            // the system shortcut (rather than shelling out to `screencapture`) means it
+            // honours the user's own capture settings: save location, file format, and the
+            // ⌃-to-copy-to-clipboard modifier. Depends on the shortcut being enabled in
+            // System Settings ▸ Keyboard ▸ Shortcuts ▸ Screenshots (on by default).
+            postKey(CGKeyCode(kVK_ANSI_4), flags: [.maskCommand, .maskShift])
         }
     }
 

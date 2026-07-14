@@ -118,28 +118,31 @@ enum SystemAction: String, Codable, CaseIterable, Identifiable {
     case lockScreen
     case sleep
     case screenSaver
+    case screenshotSelection
 
     var id: String { rawValue }
 
     var label: String {
         switch self {
-        case .missionControl: return "Mission Control"
-        case .launchpad:      return "Launchpad"
-        case .showDesktop:    return "Show Desktop"
-        case .lockScreen:     return "Lock Screen"
-        case .sleep:          return "Sleep"
-        case .screenSaver:    return "Screen Saver"
+        case .missionControl:     return "Mission Control"
+        case .launchpad:          return "Launchpad"
+        case .showDesktop:        return "Show Desktop"
+        case .lockScreen:         return "Lock Screen"
+        case .sleep:              return "Sleep"
+        case .screenSaver:        return "Screen Saver"
+        case .screenshotSelection: return "Screenshot Selection"
         }
     }
 
     var symbolName: String {
         switch self {
-        case .missionControl: return "rectangle.3.group"
-        case .launchpad:      return "square.grid.3x3.fill"
-        case .showDesktop:    return "menubar.dock.rectangle"
-        case .lockScreen:     return "lock.fill"
-        case .sleep:          return "moon.fill"
-        case .screenSaver:    return "display"
+        case .missionControl:      return "rectangle.3.group"
+        case .launchpad:           return "square.grid.3x3.fill"
+        case .showDesktop:         return "menubar.dock.rectangle"
+        case .lockScreen:          return "lock.fill"
+        case .sleep:               return "moon.fill"
+        case .screenSaver:         return "display"
+        case .screenshotSelection: return "camera.viewfinder"
         }
     }
 }

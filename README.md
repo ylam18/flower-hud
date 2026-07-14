@@ -8,19 +8,36 @@ fresh if it isn't running.
 By default the flower shows the apps pinned to your **Dock**. A settings window lets you build
 a **custom preset** and rebind the trigger.
 
-## Requirements
+## Download & install
 
+The ready-to-run app is committed to this repo as **`Flower.zip`** — no build tools needed,
+just download it straight from here:
+
+1. In the file list at the top of this repo, click **`Flower.zip`**, then **Download raw file**.
+2. Unzip it. Inside the **Flower** folder, double-click **Install Flower.command**.
+3. macOS shows a one-time *"downloaded from the Internet — open?"* prompt — click **Open**.
+   The installer copies Flower into your Applications folder, clears the download-quarantine
+   flag, and launches it. A 🌸 icon appears in your menu bar.
+
+Flower is shared directly (not via the App Store) and is ad-hoc signed, not notarized — that
+single "Open" click is expected and only happens once. See **[SHARING.md](SHARING.md)** for the
+full walkthrough, including the permissions Flower requests on first launch.
+
+## Build from source (developers)
+
+Prefer to build it yourself?
+
+**Requirements**
 - macOS 13 (Ventura) or later
 - Xcode Command Line Tools (`xcode-select --install`) — full Xcode is **not** required
-
-## Build & run
 
 ```bash
 ./build.sh       # compiles and assembles Flower.app (Apple Silicon)
 open Flower.app  # launches it (menu-bar icon only — no Dock icon)
 ```
 
-For Intel: `ARCH=x86_64 ./build.sh`.
+For Intel: `ARCH=x86_64 ./build.sh`. To rebuild the shareable `Flower.zip` (universal binary
++ installer), run `./package.sh`.
 
 ### First launch
 

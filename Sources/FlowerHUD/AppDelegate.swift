@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var cancellables = Set<AnyCancellable>()
     private var accessibilityPoll: Timer?
     private let accessibilityPrompt = AccessibilityPromptController()
+    private let onboarding = OnboardingController()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setUpStatusItem()
@@ -32,14 +33,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func startMonitoring() {
-        if Accessibility.isTrusted {
+        let trusted = Accessibility.isTrusted
+        if trusted {
             beginTap()
         } else {
-            // Register the app in the Accessibility list (no lingering system prompt),
-            // show our own dismissable prompt, and poll so the trigger starts working
-            // the moment access is granted — no quit-and-relaunch required.
+            // Register the app in the Accessibility list (no lingering system prompt).
             Accessibility.register()
+        }
+
+        if !OnboardingController.hasCompleted {
+            // First run: the full guided checklist (Accessibility + Screen Recording).
+            onboarding.show()
+        } else if !trusted {
+            // Returning user who revoked access: the compact prompt is enough.
             accessibilityPrompt.show()
+        }
+
+        // Poll so the trigger starts working the moment Accessibility is granted —
+        // no quit-and-relaunch required, regardless of which window is on screen.
+        if !trusted {
             waitForAccessibility()
         }
     }

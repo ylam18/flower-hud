@@ -2,9 +2,13 @@
 .build/
 .build-bin/
 
-# Compiled app bundle & distributable (ship these via GitHub Releases instead)
+# Compiled app bundle — built locally / lives inside the shipped zip, not tracked
 *.app/
+
+# Zips are ignored by default, but the shipped distributable IS tracked so users
+# can download it straight from the repo (see README → Download & install).
 *.zip
+!Flower.zip
 
 # macOS
 .DS_Store

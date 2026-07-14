@@ -60,7 +60,7 @@ SOURCES=()
 while IFS= read -r -d '' f; do SOURCES+=("$f"); done \
     < <(find "$ROOT/Sources/FlowerHUD" -name '*.swift' -print0)
 xcrun swiftc -O -target "$TARGET" \
-    "${OVERLAY_ARGS[@]}" \
+    ${OVERLAY_ARGS[@]+"${OVERLAY_ARGS[@]}"} \
     -module-cache-path "$BUILD_DIR/modulecache" \
     -o "$BUILD_DIR/$APP_NAME" \
     "${SOURCES[@]}"

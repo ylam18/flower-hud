@@ -4,34 +4,31 @@ Flower is a menu-bar app: hold a trigger (a side mouse button by default), a rin
 of your apps blooms around the cursor, and releasing over one opens it.
 
 It's a small app shared directly (not from the App Store), so macOS needs you to
-OK it once. Three steps:
+OK it once. Two steps:
 
-### 1. Move it to Applications
-Unzip `Flower.zip`, then drag **Flower.app** into your **Applications** folder.
+### 1. Run the installer
+Unzip `Flower.zip`. Inside the **Flower** folder, double-click
+**Install Flower.command**.
 
-### 2. Clear the "downloaded from the internet" flag
-macOS quarantines apps that didn't come from the App Store. Open **Terminal**
-(Applications ▸ Utilities ▸ Terminal) and paste this, then press Return:
+macOS shows a one-time *"downloaded from the Internet — open?"* box the first time —
+click **Open**. The installer moves Flower into your Applications folder, clears the
+download flag for you, and launches it. A 🌸 icon appears in your menu bar.
 
-```bash
-xattr -dr com.apple.quarantine /Applications/Flower.app
-```
+> This replaces the old copy-into-Applications + Terminal step. The installer does
+> the `xattr` quarantine cleanup itself, so Flower won't get the bogus "damaged"
+> error.
 
-(If you put Flower somewhere other than Applications, change the path to match.)
+### 2. Grant the permissions Flower asks for
+On first launch a **Welcome to Flower** window walks you through two permissions,
+each with a button that opens the exact System Settings pane:
 
-Now double-click **Flower** to launch it. A flower icon appears in your menu bar.
+- **Accessibility** *(required)* — lets Flower detect your trigger globally. The
+  trigger starts working the moment you flip it on (no relaunch).
+- **Screen Recording** *(optional)* — only for the live window-preview thumbnails.
+  You may need to relaunch Flower once after granting this.
 
-> If you skip step 2, macOS will say Flower is "damaged" or "can't be opened" —
-> it isn't; that's just Gatekeeper blocking the quarantine flag. Run the command
-> and it'll open fine.
-
-### 3. Grant Accessibility access
-Flower watches for its trigger globally, which macOS gates behind Accessibility
-permission. On first launch it'll prompt you — or turn it on manually at:
-
-**System Settings ▸ Privacy & Security ▸ Accessibility** → enable **Flower**.
-
-The trigger starts working the moment access is granted (no relaunch needed).
+Each row flips to a green checkmark as soon as the grant lands. Click **Done** when
+you're set.
 
 ---
 
